@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 
-	"go-mall/helper"
+	"go-mall/utils"
 )
 
 type getOrderDetail struct {
@@ -54,7 +54,7 @@ func CreateOrder(c *gin.Context) {
 		return
 	}
 
-	var invoice = helper.RandSeq(10)
+	var invoice = utils.RandSeq(10)
 
 	// Create Order
 	order := models.Order{SellerId: uint(input.SellerId), CustomerId: uint(input.CustomerId), TotalPrice: uint(input.TotalPrice), Invoice: invoice, OrderStatus: "Pending"}
@@ -101,19 +101,6 @@ func GetOrderById(c *gin.Context) { // Get model if exist
 
 	c.JSON(http.StatusOK, gin.H{"data": getOrderDetail})
 }
-
-// func GetProductByCategoryId(c *gin.Context) { // Get model if exist
-// 	var products []models.Product
-
-// 	db := c.MustGet("db").(*gorm.DB)
-
-// 	if err := db.Where("category_id = ?", c.Param("id")).Find(&products).Error; err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-// 		return
-// 	}
-
-// 	c.JSON(http.StatusOK, gin.H{"data": products})
-// }
 
 func UpdateOrderStatus(c *gin.Context) {
 

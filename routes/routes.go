@@ -5,6 +5,7 @@ import (
 	"gorm.io/gorm"
 
 	"go-mall/controllers"
+	"go-mall/middlewares"
 
 	swaggerFiles "github.com/swaggo/files"     // swagger embed files
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
@@ -18,16 +19,25 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 		c.Set("db", db)
 	})
 
+	// Auth
+	r.POST("/customer/register", controllers.RegisterCustomer)
+	r.POST("/customer/login", controllers.LoginCustomer)
+
+	r.POST("/seller/register", controllers.RegisterSeller)
+	r.POST("/seller/login", controllers.LoginSeller)
+
 	// Categories Routes
 	r.GET("/categories", controllers.GetAllCategory)
-	r.POST("/categories", controllers.CreateCategory)
 	r.GET("/categories/:id", controllers.GetCategoryById)
-	// r.GET("/categories/:id/movies", controllers.GetMoviesByRatingId)
-	r.PATCH("/categories/:id", controllers.UpdateCategory)
-	r.DELETE("categories/:id", controllers.DeleteCategory)
+	categoriesMiddlewareRoute := r.Group("/categories")
+	categoriesMiddlewareRoute.Use(middlewares.JwtAuthMiddleware())
+	categoriesMiddlewareRoute.POST("/", controllers.CreateCategory)
+	categoriesMiddlewareRoute.PATCH("/:id", controllers.UpdateCategory)
+	categoriesMiddlewareRoute.DELETE("/:id", controllers.DeleteCategory)
 
 	// Product Routes
 	r.GET("/products", controllers.GetAllProduct)
+	r.GET("/products/search", controllers.SearchProduct)
 	r.POST("/products", controllers.CreateProduct)
 	r.GET("/products/:id", controllers.GetProductById)
 	r.GET("/products/:id/category", controllers.GetProductByCategoryId)

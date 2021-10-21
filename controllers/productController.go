@@ -19,11 +19,41 @@ type productInput struct {
 	CategoryId  int    `json:"category_id"`
 }
 
+type productAndCategory struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Price       int    `json:"price"`
+	Stock       int    `json:"stock"`
+	SellerId    int    `json:"seller_id"`
+	CategoryId  int    `json:"category_id"`
+	Category    string `json:"category"`
+}
+
 func GetAllProduct(c *gin.Context) {
 	// get db from gin context
 	db := c.MustGet("db").(*gorm.DB)
-	var product []models.Product
-	db.Find(&product)
+	var product []productAndCategory
+
+	if err := db.Raw("SELECT * FROM products JOIN categories ON products.category_id = categories.id").First(&product).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": product})
+}
+
+func SearchProduct(c *gin.Context) {
+	// get db from gin context
+	db := c.MustGet("db").(*gorm.DB)
+	var product []productAndCategory
+
+	queryParams := c.Query("name")
+	queryParamsLike := "%" + queryParams + "%"
+
+	if err := db.Raw(`SELECT * FROM products JOIN categories ON products.category_id = categories.id WHERE products.name LIKE ?`, queryParamsLike).First(&product).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{"data": product})
 }
