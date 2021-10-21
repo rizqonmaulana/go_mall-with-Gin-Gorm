@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -19,6 +20,11 @@ type RegisterInput struct {
 	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`
 	Email    string `json:"email" binding:"required"`
+}
+
+type ChangePasswordInput struct {
+	NewPassword        string `json:"new_password" binding:"required"`
+	NewPasswordConfirm string `json:"new_password_confirm" binding:"required"`
 }
 
 // LoginCustomer godoc
@@ -96,4 +102,47 @@ func RegisterCustomer(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "registration success", "user": user})
 
+}
+
+// UpdateCustomerPassword godoc
+// @Summary Update Customer Password.
+// @Description Update customer password by id.
+// @Tags Auth Customer
+// @Produce json
+// @Param id path string true "Customer id"
+// @Param Body body ChangePasswordInput true "the body to update customer password"
+// @Success 200 {object} map[string]interface{}
+// @Router /customer [patch]
+func UpdateCustomerPassword(c *gin.Context) {
+
+	db := c.MustGet("db").(*gorm.DB)
+	// Get model if exist
+	var customer models.Customer
+	if err := db.Where("id = ?", c.Param("id")).First(&customer).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+
+	// Validate input
+	var input ChangePasswordInput
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if input.NewPassword != input.NewPasswordConfirm {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "new password and confirm password doesn't match"})
+		return
+	}
+
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(input.NewPassword), bcrypt.DefaultCost)
+
+	passwordStr := string(hashedPassword)
+
+	var updatedInput models.Customer
+	updatedInput.Password = passwordStr
+
+	db.Model(&customer).Updates(updatedInput)
+
+	c.JSON(http.StatusOK, gin.H{"data": customer})
 }
