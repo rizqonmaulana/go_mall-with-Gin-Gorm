@@ -1,0 +1,834 @@
+{
+	"info": {
+		"_postman_id": "d98aa01b-a75c-4058-8300-f0c2ee616d40",
+		"name": "Go-Mall ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Get All Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/categories",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/categories/6",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"categories",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"category\" : \"Kesehatan\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/categories",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"category\" : \"Rumah Tangga\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/categories/7",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"categories",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"category\" : \"Elektronik\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/categories/7",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"categories",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Rating",
+					"item": [
+						{
+							"name": "Get Rating By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/products/rating/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"products",
+										"rating",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Rating By Product Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/products/12/rating",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"products",
+										"12",
+										"rating"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post Rating",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"product_id\": 12,\n    \"customer_id\": 1,\n    \"comment\" : \"keren banget, sesuai gambar\"\n} ",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/products/rating",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"products",
+										"rating"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Rating",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"product_id\": 12,\n    \"customer_id\": 1,\n    \"comment\" : \"keren banget, sesuai gambar update\"\n} ",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/products/rating/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"products",
+										"rating",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Rating",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/products/rating/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"products",
+										"rating",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get All Product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/products",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/products/search?name=Pro",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Pro"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/products/1",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product By Category Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/products/2/category",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products",
+								"2",
+								"category"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"category\" : \"Mainan\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/categories",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"name\": \"Macbook Pro M1X 2020 8/256\",\n    \"description\": \"lorem ipsum sum sum\",\n    \"price\": 25000000,\n    \"stock\": 700,\n    \"seller_id\": 1,\n    \"category_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/products/1",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"category\" : \"Elektronik\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/products/6",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"products",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Get All Order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"seller_id\" : 1,\n    \"customer_id\" : 1,\n    \"total_price\" : 50000,\n    \"product_detail_id\" : [ 11, 12 ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/order",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order Detail By Order Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"seller_id\" : 1,\n    \"customer_id\" : 1,\n    \"total_price\" : 50000,\n    \"product_detail_id\" : [ 11, 12 ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/order/1",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"seller_id\" : 1,\n    \"customer_id\" : 1,\n    \"total_price\" : 10004,\n    \"product_detail_id\" : [ \n        {\n            \"product_id\" : 1,\n            \"qty\" : 2\n        },\n        {\n            \"product_id\" : 3,\n            \"qty\" : 3\n        }\n     ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/order",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order Status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order_status\" : \"Paid\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/order/1",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order_status\" : \"Paid\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/order/14",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"order",
+								"14"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\" : \"customer-1\",\n    \"password\" : \"rahasia1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/customer/login",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"customer",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\" : \"customer-1\",\n    \"password\" : \"rahasia\",\n    \"email\" : \"customer-1@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/customer/register",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"customer",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"new_password\" : \"rahasia1\",\n    \"new_password_confirm\" : \"rahasia1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/customer/1",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"customer",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Seller",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\" : \"seller-1\",\n    \"password\" : \"rahasia2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/seller/login",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"seller",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\" : \"seller-1\",\n    \"password\" : \"rahasia\",\n    \"email\" : \"seller-1@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/seller/register",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"seller",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"new_password\" : \"rahasia2\",\n    \"new_password_confirm\" : \"rahasia2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://go-mall.herokuapp.com/seller/1",
+							"protocol": "https",
+							"host": [
+								"go-mall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"seller",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6ImN1c3RvbWVyLTFAZ21haWwuY29tIiwiZXhwIjoxNjM0ODQ5MjE0LCJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImN1c3RvbWVyLTEifQ.YYCtSQACiCzeckI7UrZoEOgo52Ja_DhKAMoXjglZ1dU",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
