@@ -13,14 +13,12 @@ import (
 type LoginInput struct {
 	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`
-	Role     string `json:"role" binding:"required"`
 }
 
 type RegisterInput struct {
 	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`
 	Email    string `json:"email" binding:"required"`
-	Role     string `json:"role" binding:"required"`
 }
 
 // LoginCustomer godoc
