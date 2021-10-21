@@ -22,10 +22,17 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	// Auth
 	r.POST("/customer/register", controllers.RegisterCustomer)
 	r.POST("/customer/login", controllers.LoginCustomer)
-	r.PATCH("/customer/:id", controllers.UpdateCustomerPassword)
+	customerMiddlewareRoute := r.Group("/customer")
+	customerMiddlewareRoute.Use(middlewares.JwtAuthMiddleware())
+	customerMiddlewareRoute.PATCH("/:id", controllers.UpdateCustomerPassword)
+	// r.PATCH("/customer/:id", controllers.UpdateCustomerPassword)
 
 	r.POST("/seller/register", controllers.RegisterSeller)
 	r.POST("/seller/login", controllers.LoginSeller)
+	sellerMiddlewareRoute := r.Group("/seller")
+	sellerMiddlewareRoute.Use(middlewares.JwtAuthMiddleware())
+	sellerMiddlewareRoute.PATCH("/:id", controllers.UpdateSellerPassword)
+	// r.PATCH("/seller/:id", controllers.UpdateSellerPassword)
 
 	// Categories Routes
 	r.GET("/categories", controllers.GetAllCategory)

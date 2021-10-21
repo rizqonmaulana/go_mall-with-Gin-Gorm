@@ -1,15 +1,22 @@
 definitions:
+  controllers.ChangePasswordInput:
+    properties:
+      new_password:
+        type: string
+      new_password_confirm:
+        type: string
+    required:
+    - new_password
+    - new_password_confirm
+    type: object
   controllers.LoginInput:
     properties:
       password:
-        type: string
-      role:
         type: string
       username:
         type: string
     required:
     - password
-    - role
     - username
     type: object
   controllers.RegisterInput:
@@ -18,14 +25,11 @@ definitions:
         type: string
       password:
         type: string
-      role:
-        type: string
       username:
         type: string
     required:
     - email
     - password
-    - role
     - username
     type: object
   controllers.categoryInput:
@@ -254,6 +258,32 @@ paths:
       summary: Update Category.
       tags:
       - Category
+  /customer/{id}:
+    patch:
+      description: Update customer password by id.
+      parameters:
+      - description: Customer id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: the body to update customer password
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.ChangePasswordInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update Customer Password.
+      tags:
+      - Auth Customer
   /customer/login:
     post:
       description: Logging in to get jwt token to access customer api.
@@ -627,6 +657,32 @@ paths:
       summary: Update Rating.
       tags:
       - Rating
+  /seller/{id}:
+    patch:
+      description: Update seller password by id.
+      parameters:
+      - description: Seller id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: the body to update seller password
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.ChangePasswordInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update Seller Password.
+      tags:
+      - Auth Seller
   /seller/login:
     post:
       description: Logging in to get jwt token to access seller api.

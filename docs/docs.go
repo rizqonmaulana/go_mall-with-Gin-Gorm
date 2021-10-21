@@ -243,6 +243,45 @@ var doc = `{
                 }
             }
         },
+        "/customer/{id}": {
+            "patch": {
+                "description": "Update customer password by id.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth Customer"
+                ],
+                "summary": "Update Customer Password.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Customer id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "the body to update customer password",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ChangePasswordInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
         "/order": {
             "get": {
                 "description": "Get a list of Order.",
@@ -809,21 +848,71 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/seller/{id}": {
+            "patch": {
+                "description": "Update seller password by id.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth Seller"
+                ],
+                "summary": "Update Seller Password.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Seller id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "the body to update seller password",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ChangePasswordInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "controllers.ChangePasswordInput": {
+            "type": "object",
+            "required": [
+                "new_password",
+                "new_password_confirm"
+            ],
+            "properties": {
+                "new_password": {
+                    "type": "string"
+                },
+                "new_password_confirm": {
+                    "type": "string"
+                }
+            }
+        },
         "controllers.LoginInput": {
             "type": "object",
             "required": [
                 "password",
-                "role",
                 "username"
             ],
             "properties": {
                 "password": {
-                    "type": "string"
-                },
-                "role": {
                     "type": "string"
                 },
                 "username": {
@@ -836,7 +925,6 @@ var doc = `{
             "required": [
                 "email",
                 "password",
-                "role",
                 "username"
             ],
             "properties": {
@@ -844,9 +932,6 @@ var doc = `{
                     "type": "string"
                 },
                 "password": {
-                    "type": "string"
-                },
-                "role": {
                     "type": "string"
                 },
                 "username": {

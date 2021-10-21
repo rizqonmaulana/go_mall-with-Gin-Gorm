@@ -112,7 +112,7 @@ func RegisterCustomer(c *gin.Context) {
 // @Param id path string true "Customer id"
 // @Param Body body ChangePasswordInput true "the body to update customer password"
 // @Success 200 {object} map[string]interface{}
-// @Router /customer [patch]
+// @Router /customer/{id} [patch]
 func UpdateCustomerPassword(c *gin.Context) {
 
 	db := c.MustGet("db").(*gorm.DB)

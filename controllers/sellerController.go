@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -85,4 +86,47 @@ func RegisterSeller(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "registration success", "user": user})
 
+}
+
+// UpdateSellerPassword godoc
+// @Summary Update Seller Password.
+// @Description Update seller password by id.
+// @Tags Auth Seller
+// @Produce json
+// @Param id path string true "Seller id"
+// @Param Body body ChangePasswordInput true "the body to update seller password"
+// @Success 200 {object} map[string]interface{}
+// @Router /seller/{id} [patch]
+func UpdateSellerPassword(c *gin.Context) {
+
+	db := c.MustGet("db").(*gorm.DB)
+	// Get model if exist
+	var seller models.Seller
+	if err := db.Where("id = ?", c.Param("id")).First(&seller).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+
+	// Validate input
+	var input ChangePasswordInput
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if input.NewPassword != input.NewPasswordConfirm {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "new password and confirm password doesn't match"})
+		return
+	}
+
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(input.NewPassword), bcrypt.DefaultCost)
+
+	passwordStr := string(hashedPassword)
+
+	var updatedInput models.Seller
+	updatedInput.Password = passwordStr
+
+	db.Model(&seller).Updates(updatedInput)
+
+	c.JSON(http.StatusOK, gin.H{"data": seller})
 }
