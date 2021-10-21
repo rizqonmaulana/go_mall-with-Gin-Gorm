@@ -51,19 +51,6 @@ func GetCategoryById(c *gin.Context) { // Get model if exist
 	c.JSON(http.StatusOK, gin.H{"data": category})
 }
 
-// func GetMoviesByRatingId(c *gin.Context) { // Get model if exist
-// 	var movies []models.Movie
-
-// 	db := c.MustGet("db").(*gorm.DB)
-
-// 	if err := db.Where("age_rating_category_id = ?", c.Param("id")).Find(&movies).Error; err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-// 		return
-// 	}
-
-// 	c.JSON(http.StatusOK, gin.H{"data": movies})
-// }
-
 func UpdateCategory(c *gin.Context) {
 
 	db := c.MustGet("db").(*gorm.DB)
