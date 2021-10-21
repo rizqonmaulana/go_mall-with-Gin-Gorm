@@ -37,6 +37,13 @@ type orderDetailInput struct {
 	Qty       int `json:"qty"`
 }
 
+// GetAllOrder godoc
+// @Summary Get all Order.
+// @Description Get a list of Order.
+// @Tags Order
+// @Produce json
+// @Success 200 {object} []models.Order
+// @Router /order [get]
 func GetAllOrder(c *gin.Context) {
 	// get db from gin context
 	db := c.MustGet("db").(*gorm.DB)
@@ -46,6 +53,14 @@ func GetAllOrder(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": order})
 }
 
+// CreateOrder godoc
+// @Summary Create New Order.
+// @Description Creating a new Order.
+// @Tags Order
+// @Param Body body orderInput true "the body to create a new Order"
+// @Produce json
+// @Success 200 {object} models.Order
+// @Router /order [post]
 func CreateOrder(c *gin.Context) {
 	// Validate input
 	var input orderInput
@@ -89,6 +104,14 @@ func CreateOrder(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": order})
 }
 
+// GetOrderById godoc
+// @Summary Get Order by Id.
+// @Description Get a Order by id.
+// @Tags Order
+// @Produce json
+// @Param id path string true "Order id"
+// @Success 200 {object} models.Order
+// @Router /order/{id} [get]
 func GetOrderById(c *gin.Context) { // Get model if exist
 	var getOrderDetail []getOrderDetail
 
@@ -97,11 +120,19 @@ func GetOrderById(c *gin.Context) { // Get model if exist
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		return
 	}
-	// db.Model(&order{}).Select("users.name, emails.email").Joins("left join emails on emails.user_id = users.id").Scan(&result{})
 
 	c.JSON(http.StatusOK, gin.H{"data": getOrderDetail})
 }
 
+// UpdateOrder godoc
+// @Summary Update Order Status.
+// @Description Update Order Status by id.
+// @Tags Order
+// @Produce json
+// @Param id path string true "Order id"
+// @Param Body body orderInput true "the body to update Order Status"
+// @Success 200 {object} models.Order
+// @Router /order/{id} [patch]
 func UpdateOrderStatus(c *gin.Context) {
 
 	db := c.MustGet("db").(*gorm.DB)
@@ -128,6 +159,14 @@ func UpdateOrderStatus(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": order})
 }
 
+// DeleteOrder godoc
+// @Summary Delete one Order.
+// @Description Delete a Order by id.
+// @Tags Order
+// @Produce json
+// @Param id path string true "Order id"
+// @Success 200 {object} map[string]boolean
+// @Router /order/{id} [delete]
 func DeleteOrder(c *gin.Context) {
 	// Get model if exist
 	db := c.MustGet("db").(*gorm.DB)

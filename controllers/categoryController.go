@@ -14,6 +14,13 @@ type categoryInput struct {
 	Category string `json:"category"`
 }
 
+// GetAllCategory godoc
+// @Summary Get all Category.
+// @Description Get a list of Category.
+// @Tags Category
+// @Produce json
+// @Success 200 {object} []models.Category
+// @Router /categories [get]
 func GetAllCategory(c *gin.Context) {
 	// get db from gin context
 	db := c.MustGet("db").(*gorm.DB)
@@ -23,6 +30,15 @@ func GetAllCategory(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": category})
 }
 
+// CreateCategory godoc
+// @Summary Create New Category.
+// @Description Creating a new Category.
+// @Tags Category
+// @Param Body body categoryInput true "the body to create a new Category"
+// @securityDefinitions.apikey ApiKeyAuth
+// @Produce json
+// @Success 200 {object} models.Category
+// @Router /categories [post]
 func CreateCategory(c *gin.Context) {
 	// Validate input
 	var input categoryInput
@@ -39,6 +55,14 @@ func CreateCategory(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": category})
 }
 
+// GetCategoryById godoc
+// @Summary Get Category by Id.
+// @Description Get an Category by id.
+// @Tags Category
+// @Produce json
+// @Param id path string true "Category id"
+// @Success 200 {object} models.Category
+// @Router /categories/{id} [get]
 func GetCategoryById(c *gin.Context) { // Get model if exist
 	var category models.Category
 
@@ -51,6 +75,15 @@ func GetCategoryById(c *gin.Context) { // Get model if exist
 	c.JSON(http.StatusOK, gin.H{"data": category})
 }
 
+// UpdateCategory godoc
+// @Summary Update Category.
+// @Description Update Category by id.
+// @Tags Category
+// @Produce json
+// @Param id path string true "Category id"
+// @Param Body body categoryInput true "the body to update category"
+// @Success 200 {object} models.Category
+// @Router /categories/{id} [patch]
 func UpdateCategory(c *gin.Context) {
 
 	db := c.MustGet("db").(*gorm.DB)
@@ -77,6 +110,14 @@ func UpdateCategory(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": category})
 }
 
+// DeleteCategory godoc
+// @Summary Delete one Category.
+// @Description Delete a Category by id.
+// @Tags Category
+// @Produce json
+// @Param id path string true "Category id"
+// @Success 200 {object} map[string]boolean
+// @Router /categories/{id} [delete]
 func DeleteCategory(c *gin.Context) {
 	// Get model if exist
 	db := c.MustGet("db").(*gorm.DB)

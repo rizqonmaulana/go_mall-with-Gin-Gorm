@@ -9,14 +9,14 @@ import (
 	"gorm.io/gorm"
 )
 
-// LoginUser godoc
-// @Summary Login as as user.
-// @Description Logging in to get jwt token to access admin or user api by roles.
-// @Tags Auth
-// @Param Body body LoginInput true "the body to login a user"
+// LoginSeller godoc
+// @Summary Login as as seller.
+// @Description Logging in to get jwt token to access seller api.
+// @Tags Auth Seller
+// @Param Body body LoginInput true "the body to login a seller"
 // @Produce json
 // @Success 200 {object} map[string]interface{}
-// @Router /login [post]
+// @Router /seller/login [post]
 func LoginSeller(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var input LoginInput
@@ -48,14 +48,14 @@ func LoginSeller(c *gin.Context) {
 
 }
 
-// Register godoc
-// @Summary Register a user.
-// @Description registering a user from public access.
-// @Tags Auth
-// @Param Body body RegisterInput true "the body to register a user"
+// RegisterSeller godoc
+// @Summary Register a seller.
+// @Description registering a seller from public access.
+// @Tags Auth Seller
+// @Param Body body RegisterInput true "the body to register a seller"
 // @Produce json
 // @Success 200 {object} map[string]interface{}
-// @Router /register [post]
+// @Router /seller/register [post]
 func RegisterSeller(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var input RegisterInput

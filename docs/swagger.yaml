@@ -3,10 +3,13 @@ definitions:
     properties:
       password:
         type: string
+      role:
+        type: string
       username:
         type: string
     required:
     - password
+    - role
     - username
     type: object
   controllers.RegisterInput:
@@ -15,21 +18,247 @@ definitions:
         type: string
       password:
         type: string
+      role:
+        type: string
       username:
         type: string
     required:
     - email
     - password
+    - role
     - username
     type: object
+  controllers.categoryInput:
+    properties:
+      category:
+        type: string
+    type: object
+  controllers.orderDetailInput:
+    properties:
+      product_id:
+        type: integer
+      qty:
+        type: integer
+    type: object
+  controllers.orderInput:
+    properties:
+      customer_id:
+        type: integer
+      product_detail_id:
+        items:
+          $ref: '#/definitions/controllers.orderDetailInput'
+        type: array
+      seller_id:
+        type: integer
+      total_price:
+        type: integer
+    type: object
+  controllers.productInput:
+    properties:
+      category_id:
+        type: integer
+      description:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+      seller_id:
+        type: integer
+      stock:
+        type: integer
+    type: object
+  controllers.productRatingInput:
+    properties:
+      comment:
+        type: string
+      customer_id:
+        type: integer
+      product_id:
+        type: integer
+      rating:
+        type: integer
+    type: object
+  models.Category:
+    properties:
+      category:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  models.Order:
+    properties:
+      created_at:
+        type: string
+      customer_id:
+        type: integer
+      id:
+        type: integer
+      invoice:
+        type: string
+      order_status:
+        type: string
+      seller_id:
+        type: integer
+      total_price:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  models.Product:
+    properties:
+      category_id:
+        type: integer
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: integer
+      seller_id:
+        type: integer
+      stock:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  models.ProductRating:
+    properties:
+      comment:
+        type: string
+      created_at:
+        type: string
+      customer_id:
+        type: integer
+      id:
+        type: integer
+      product_id:
+        type: integer
+      rating:
+        type: integer
+      updated_at:
+        type: string
+    type: object
 info:
-  contact: {}
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
 paths:
-  /login:
+  /categories:
+    get:
+      description: Get a list of Category.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Category'
+            type: array
+      summary: Get all Category.
+      tags:
+      - Category
     post:
-      description: Logging in to get jwt token to access admin or user api by roles.
+      description: Creating a new Category.
       parameters:
-      - description: the body to login a user
+      - description: the body to create a new Category
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.categoryInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Category'
+      summary: Create New Category.
+      tags:
+      - Category
+  /categories/{id}:
+    delete:
+      description: Delete a Category by id.
+      parameters:
+      - description: Category id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+      summary: Delete one Category.
+      tags:
+      - Category
+    get:
+      description: Get an Category by id.
+      parameters:
+      - description: Category id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Category'
+      summary: Get Category by Id.
+      tags:
+      - Category
+    patch:
+      description: Update Category by id.
+      parameters:
+      - description: Category id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: the body to update category
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.categoryInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Category'
+      summary: Update Category.
+      tags:
+      - Category
+  /customer/login:
+    post:
+      description: Logging in to get jwt token to access customer api.
+      parameters:
+      - description: the body to login a customer
         in: body
         name: Body
         required: true
@@ -43,14 +272,14 @@ paths:
           schema:
             additionalProperties: true
             type: object
-      summary: Login as as user.
+      summary: Login as as customer.
       tags:
-      - Auth
-  /register:
+      - Auth Customer
+  /customer/register:
     post:
-      description: registering a user from public access.
+      description: registering a customer from public access.
       parameters:
-      - description: the body to register a user
+      - description: the body to register a customer
         in: body
         name: Body
         required: true
@@ -64,7 +293,380 @@ paths:
           schema:
             additionalProperties: true
             type: object
-      summary: Register a user.
+      summary: Register a Customer.
       tags:
-      - Auth
+      - Auth Customer
+  /order:
+    get:
+      description: Get a list of Order.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Order'
+            type: array
+      summary: Get all Order.
+      tags:
+      - Order
+    post:
+      description: Creating a new Order.
+      parameters:
+      - description: the body to create a new Order
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.orderInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Order'
+      summary: Create New Order.
+      tags:
+      - Order
+  /order/{id}:
+    delete:
+      description: Delete a Order by id.
+      parameters:
+      - description: Order id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+      summary: Delete one Order.
+      tags:
+      - Order
+    get:
+      description: Get a Order by id.
+      parameters:
+      - description: Order id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Order'
+      summary: Get Order by Id.
+      tags:
+      - Order
+    patch:
+      description: Update Order Status by id.
+      parameters:
+      - description: Order id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: the body to update Order Status
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.orderInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Order'
+      summary: Update Order Status.
+      tags:
+      - Order
+  /products:
+    get:
+      description: Get a list of Product.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Product'
+            type: array
+      summary: Get all Product.
+      tags:
+      - Product
+    post:
+      description: Creating a new Product.
+      parameters:
+      - description: the body to create a new Product
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.productInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+      summary: Create New Product.
+      tags:
+      - Product
+  /products/{id}:
+    delete:
+      description: Delete a Product by id.
+      parameters:
+      - description: Product id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+      summary: Delete one Product.
+      tags:
+      - Product
+    get:
+      description: Get a Product by id.
+      parameters:
+      - description: Product id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+      summary: Get Product by Id.
+      tags:
+      - Product
+    patch:
+      description: Update Product by id.
+      parameters:
+      - description: Product id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: the body to update Product
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.productInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+      summary: Update Product.
+      tags:
+      - Product
+  /products/{id}/category:
+    get:
+      description: Get a Product by category id.
+      parameters:
+      - description: Product id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+      summary: Get Product by Category Id.
+      tags:
+      - Product
+  /products/{id}/rating:
+    get:
+      description: Get a Rating by Product id.
+      parameters:
+      - description: Rating id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ProductRating'
+      summary: Get Rating by Product Id.
+      tags:
+      - Rating
+  /products/rating:
+    post:
+      description: Creating a new Rating.
+      parameters:
+      - description: the body to create a new Rating
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.productRatingInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ProductRating'
+      summary: Create New Rating.
+      tags:
+      - Rating
+  /products/rating/{id}:
+    delete:
+      description: Delete a Rating by id.
+      parameters:
+      - description: Rating id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+      summary: Delete one Rating.
+      tags:
+      - Rating
+    get:
+      description: Get a Rating by id.
+      parameters:
+      - description: Rating id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ProductRating'
+      summary: Get Rating by Id.
+      tags:
+      - Rating
+  /products/search:
+    get:
+      description: Search a list of Product.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Product'
+            type: array
+      summary: Search Product.
+      tags:
+      - Product
+  /produts/ratings/{id}:
+    patch:
+      description: Update Rating by id.
+      parameters:
+      - description: Rating id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: the body to update Rating
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.productRatingInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ProductRating'
+      summary: Update Rating.
+      tags:
+      - Rating
+  /seller/login:
+    post:
+      description: Logging in to get jwt token to access seller api.
+      parameters:
+      - description: the body to login a seller
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.LoginInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Login as as seller.
+      tags:
+      - Auth Seller
+  /seller/register:
+    post:
+      description: registering a seller from public access.
+      parameters:
+      - description: the body to register a seller
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.RegisterInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Register a seller.
+      tags:
+      - Auth Seller
 swagger: "2.0"

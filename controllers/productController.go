@@ -29,6 +29,13 @@ type productAndCategory struct {
 	Category    string `json:"category"`
 }
 
+// GetAllProduct godoc
+// @Summary Get all Product.
+// @Description Get a list of Product.
+// @Tags Product
+// @Produce json
+// @Success 200 {object} []models.Product
+// @Router /products [get]
 func GetAllProduct(c *gin.Context) {
 	// get db from gin context
 	db := c.MustGet("db").(*gorm.DB)
@@ -42,6 +49,14 @@ func GetAllProduct(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": product})
 }
 
+// SearchProduct godoc
+// @Summary Search Product.
+// @Description Search a list of Product.
+// @Tags Product
+// @Produce json
+// @Query name path string true "Product name"
+// @Success 200 {object} []models.Product
+// @Router /products/search [get]
 func SearchProduct(c *gin.Context) {
 	// get db from gin context
 	db := c.MustGet("db").(*gorm.DB)
@@ -58,6 +73,14 @@ func SearchProduct(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": product})
 }
 
+// CreateProduct godoc
+// @Summary Create New Product.
+// @Description Creating a new Product.
+// @Tags Product
+// @Param Body body productInput true "the body to create a new Product"
+// @Produce json
+// @Success 200 {object} models.Product
+// @Router /products [post]
 func CreateProduct(c *gin.Context) {
 	// Validate input
 	var input productInput
@@ -74,6 +97,14 @@ func CreateProduct(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": product})
 }
 
+// GetProductById godoc
+// @Summary Get Product by Id.
+// @Description Get a Product by id.
+// @Tags Product
+// @Produce json
+// @Param id path string true "Product id"
+// @Success 200 {object} models.Product
+// @Router /products/{id} [get]
 func GetProductById(c *gin.Context) { // Get model if exist
 	var product models.Product
 
@@ -86,6 +117,14 @@ func GetProductById(c *gin.Context) { // Get model if exist
 	c.JSON(http.StatusOK, gin.H{"data": product})
 }
 
+// GetProductByCategoryId godoc
+// @Summary Get Product by Category Id.
+// @Description Get a Product by category id.
+// @Tags Product
+// @Produce json
+// @Param id path string true "Product id"
+// @Success 200 {object} models.Product
+// @Router /products/{id}/category [get]
 func GetProductByCategoryId(c *gin.Context) { // Get model if exist
 	var products []models.Product
 
@@ -99,6 +138,15 @@ func GetProductByCategoryId(c *gin.Context) { // Get model if exist
 	c.JSON(http.StatusOK, gin.H{"data": products})
 }
 
+// UpdateProduct godoc
+// @Summary Update Product.
+// @Description Update Product by id.
+// @Tags Product
+// @Produce json
+// @Param id path string true "Product id"
+// @Param Body body productInput true "the body to update Product"
+// @Success 200 {object} models.Product
+// @Router /products/{id} [patch]
 func UpdateProduct(c *gin.Context) {
 
 	db := c.MustGet("db").(*gorm.DB)
@@ -130,6 +178,14 @@ func UpdateProduct(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": product})
 }
 
+// DeleteProduct godoc
+// @Summary Delete one Product.
+// @Description Delete a Product by id.
+// @Tags Product
+// @Produce json
+// @Param id path string true "Product id"
+// @Success 200 {object} map[string]boolean
+// @Router /products/{id} [delete]
 func DeleteProduct(c *gin.Context) {
 	// Get model if exist
 	db := c.MustGet("db").(*gorm.DB)

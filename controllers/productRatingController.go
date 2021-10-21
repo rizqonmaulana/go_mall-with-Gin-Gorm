@@ -17,6 +17,14 @@ type productRatingInput struct {
 	Comment    string `json:"comment"`
 }
 
+// CreateRating godoc
+// @Summary Create New Rating.
+// @Description Creating a new Rating.
+// @Tags Rating
+// @Param Body body productRatingInput true "the body to create a new Rating"
+// @Produce json
+// @Success 200 {object} models.ProductRating
+// @Router /products/rating [post]
 func CreateRating(c *gin.Context) {
 	// Validate input
 	var input productRatingInput
@@ -33,6 +41,14 @@ func CreateRating(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": rating})
 }
 
+// GetRatingById godoc
+// @Summary Get Rating by Id.
+// @Description Get a Rating by id.
+// @Tags Rating
+// @Produce json
+// @Param id path string true "Rating id"
+// @Success 200 {object} models.ProductRating
+// @Router /products/rating/{id} [get]
 func GetRatingById(c *gin.Context) { // Get model if exist
 	var rating models.ProductRating
 
@@ -45,6 +61,14 @@ func GetRatingById(c *gin.Context) { // Get model if exist
 	c.JSON(http.StatusOK, gin.H{"data": rating})
 }
 
+// GetRatingByProductId godoc
+// @Summary Get Rating by Product Id.
+// @Description Get a Rating by Product id.
+// @Tags Rating
+// @Produce json
+// @Param id path string true "Rating id"
+// @Success 200 {object} models.ProductRating
+// @Router /products/{id}/rating [get]
 func GetRatingByProductId(c *gin.Context) { // Get model if exist
 	var rating []models.ProductRating
 
@@ -58,6 +82,15 @@ func GetRatingByProductId(c *gin.Context) { // Get model if exist
 	c.JSON(http.StatusOK, gin.H{"data": rating})
 }
 
+// UpdateRating godoc
+// @Summary Update Rating.
+// @Description Update Rating by id.
+// @Tags Rating
+// @Produce json
+// @Param id path string true "Rating id"
+// @Param Body body productRatingInput true "the body to update Rating"
+// @Success 200 {object} models.ProductRating
+// @Router /produts/ratings/{id} [patch]
 func UpdateRating(c *gin.Context) {
 
 	db := c.MustGet("db").(*gorm.DB)
@@ -87,6 +120,14 @@ func UpdateRating(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": rating})
 }
 
+// DeleteRating godoc
+// @Summary Delete one Rating.
+// @Description Delete a Rating by id.
+// @Tags Rating
+// @Produce json
+// @Param id path string true "Rating id"
+// @Success 200 {object} map[string]boolean
+// @Router /products/rating/{id} [delete]
 func DeleteRating(c *gin.Context) {
 	// Get model if exist
 	db := c.MustGet("db").(*gorm.DB)

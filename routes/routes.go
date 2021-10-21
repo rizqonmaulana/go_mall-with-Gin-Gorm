@@ -38,25 +38,29 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	// Product Routes
 	r.GET("/products", controllers.GetAllProduct)
 	r.GET("/products/search", controllers.SearchProduct)
-	r.POST("/products", controllers.CreateProduct)
 	r.GET("/products/:id", controllers.GetProductById)
 	r.GET("/products/:id/category", controllers.GetProductByCategoryId)
-	r.PATCH("/products/:id", controllers.UpdateProduct)
-	r.DELETE("products/:id", controllers.DeleteProduct)
+	productsMiddlewareRoute := r.Group("/products")
+	productsMiddlewareRoute.Use(middlewares.JwtAuthMiddleware())
+	productsMiddlewareRoute.POST("/", controllers.CreateProduct)
+	productsMiddlewareRoute.PATCH("/:id", controllers.UpdateProduct)
+	productsMiddlewareRoute.DELETE("/:id", controllers.DeleteProduct)
 
-	// Product Comment Routes
-	r.POST("/products/rating", controllers.CreateRating)
+	// Product Rating Routes
 	r.GET("/products/rating/:id", controllers.GetRatingById)
 	r.GET("/products/:id/rating", controllers.GetRatingByProductId)
-	r.PATCH("/products/rating/:id", controllers.UpdateRating)
-	r.DELETE("products/rating/:id", controllers.DeleteRating)
+	productsMiddlewareRoute.POST("/rating", controllers.CreateRating)
+	productsMiddlewareRoute.PATCH("/rating/:id", controllers.UpdateRating)
+	productsMiddlewareRoute.DELETE("/rating/:id", controllers.DeleteRating)
 
 	// Order Routes
 	r.GET("/order", controllers.GetAllOrder)
 	r.GET("/order/:id", controllers.GetOrderById)
-	r.POST("/order", controllers.CreateOrder)
-	r.PATCH("/order/:id", controllers.UpdateOrderStatus)
-	r.DELETE("/order/:id", controllers.DeleteOrder)
+	orderMiddlewareRoute := r.Group("/order")
+	orderMiddlewareRoute.Use(middlewares.JwtAuthMiddleware())
+	orderMiddlewareRoute.POST("/", controllers.CreateOrder)
+	orderMiddlewareRoute.PATCH("/:id", controllers.UpdateOrderStatus)
+	orderMiddlewareRoute.DELETE("/:id", controllers.DeleteOrder)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 

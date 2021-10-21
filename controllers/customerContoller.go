@@ -23,14 +23,14 @@ type RegisterInput struct {
 	Role     string `json:"role" binding:"required"`
 }
 
-// LoginUser godoc
-// @Summary Login as as user.
-// @Description Logging in to get jwt token to access admin or user api by roles.
-// @Tags Auth
-// @Param Body body LoginInput true "the body to login a user"
+// LoginCustomer godoc
+// @Summary Login as as customer.
+// @Description Logging in to get jwt token to access customer api.
+// @Tags Auth Customer
+// @Param Body body LoginInput true "the body to login a customer"
 // @Produce json
 // @Success 200 {object} map[string]interface{}
-// @Router /login [post]
+// @Router /customer/login [post]
 func LoginCustomer(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var input LoginInput
@@ -62,14 +62,14 @@ func LoginCustomer(c *gin.Context) {
 
 }
 
-// Register godoc
-// @Summary Register a user.
-// @Description registering a user from public access.
-// @Tags Auth
-// @Param Body body RegisterInput true "the body to register a user"
+// RegisterCustomer godoc
+// @Summary Register a Customer.
+// @Description registering a customer from public access.
+// @Tags Auth Customer
+// @Param Body body RegisterInput true "the body to register a customer"
 // @Produce json
 // @Success 200 {object} map[string]interface{}
-// @Router /register [post]
+// @Router /customer/register [post]
 func RegisterCustomer(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var input RegisterInput
