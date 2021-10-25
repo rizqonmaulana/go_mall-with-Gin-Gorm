@@ -1,4 +1,4 @@
-# Final Project - BDS Sanbercode Golang Batch 28
+# Golang Rest API - Go-Mall Project - GIN & GORM
 
 
 
